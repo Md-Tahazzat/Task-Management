@@ -16,6 +16,8 @@ const Register = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const from = location?.state?.from || "/";
+
+  // React Hook form functionality
   const {
     register,
     handleSubmit,
@@ -51,7 +53,16 @@ const Register = () => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        const errorMess = err.message?.split("/")[1].slice(0, -2) || "";
+        if (errorMess === "email-already-in-use") {
+          setError("email", {
+            type: "manual",
+            message:
+              "This email already exists. Please choose a different email.",
+          });
+        }
+        console.log(errorMess);
+        Swal.close();
       });
   };
 
@@ -71,12 +82,10 @@ const Register = () => {
     <div className="w-screen h-screen flex items-center justify-center  ">
       <UpdateTitle title="Reister"></UpdateTitle>;
       <form
-        className="border md:min-w-[28rem] mx-auto md:max-w-[32rem] p-4 w-full md:py-5 md:px-20 bg-slate-300/90 dark:bg-slate-700/90 border-slate-300 dark:border-slate-600 rounded-md"
+        className="border md:min-w-[28rem] mx-2 md:mx-auto md:max-w-[32rem] p-4 w-full md:py-5 md:px-20 bg-slate-300/90 dark:bg-slate-700/90 border-slate-300 dark:border-slate-600 rounded-md"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h1 className="text-center text-2xl font-semibold ">
-          Please Register !!
-        </h1>
+        <h1 className="text-center text-2xl font-semibold ">Please Register</h1>
         <div className="w-full">
           <label htmlFor="name" className="label">
             Name:
@@ -87,7 +96,7 @@ const Register = () => {
             required
             {...register("name", { required: true })}
             placeholder="Enter your name"
-            className="py-2 px-2 bg-slate-100/60 dark:bg-slate-500/60 rounded-md border dark:border-slate-500 border-slate-300 focus:outline-none focus:border-slate-400 w-full max-w-lg"
+            className="py-2 px-2 bg-slate-100/60 dark:bg-slate-900/60 rounded-md border dark:border-slate-500 border-slate-300 focus:outline-none focus:border-slate-400 w-full max-w-lg"
           />
         </div>
 
@@ -101,7 +110,11 @@ const Register = () => {
             required
             {...register("email", { required: true })}
             placeholder="Enter your email"
-            className="py-2 px-2 bg-slate-100/60 dark:bg-slate-500/60 rounded-md border dark:border-slate-500 border-slate-300 focus:outline-none focus:border-slate-400 w-full max-w-lg"
+            className={`py-2 px-2 bg-slate-100/60 dark:bg-slate-900/60 w-full rounded-md border ${
+              errors.email
+                ? "border-red-600"
+                : "dark:border-slate-500 border-slate-400"
+            } focus:outline-none focus:border-slate-400 max-w-sm`}
           />
         </div>
         <div className="w-full relative">
@@ -120,23 +133,22 @@ const Register = () => {
               pattern: {
                 value: /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
                 message:
-                  "Password must contain at least one uppercase letter and one special character",
+                  "Password must have at least one uppercase letter and one special character.",
               },
             })}
             placeholder="Password"
-            className={`py-2 px-2 bg-slate-100/60 dark:bg-slate-500/60 w-full rounded-md border ${
+            className={`py-2 px-2 bg-slate-100/60 dark:bg-slate-900/60 w-full rounded-md border ${
               errors?.password
                 ? "border-red-600"
                 : "dark:border-slate-500 border-slate-400"
             } focus:outline-none focus:border-slate-400 max-w-sm`}
           />
-          <a
+          <span
             onClick={() => setHidePassword(!hidePassword)}
-            href="#"
             className="absolute right-3 bottom-3"
           >
             {hidePassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>}
-          </a>
+          </span>
         </div>
 
         <div className="w-full relative">
@@ -155,29 +167,30 @@ const Register = () => {
               pattern: {
                 value: /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
                 message:
-                  "Password must contain at least one uppercase letter and one special character",
+                  "Password must have at least one uppercase letter and one special character.",
               },
             })}
             placeholder="Confirm password"
-            className={`py-2 px-2 bg-slate-100/60 dark:bg-slate-500/60 w-full rounded-md border ${
-              errors?.password || errors.confirmPassword
+            className={`py-2 px-2 bg-slate-100/60 dark:bg-slate-900/60 w-full rounded-md border ${
+              errors.confirmPassword
                 ? "border-red-600"
                 : "dark:border-slate-500 border-slate-400"
             } focus:outline-none focus:border-slate-400 max-w-sm`}
           />
-          <a
+          <span
             onClick={() => setHidePassword(!hidePassword)}
-            href="#"
             className="absolute right-3 bottom-3"
           >
             {hidePassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>}
-          </a>
+          </span>
         </div>
         <div>
           <label className="label text-red-500 dark:text-red-400">
             {errors && (
               <span>
-                {errors.confirmPassword?.message || errors?.password?.message}
+                {errors.confirmPassword?.message ||
+                  errors?.password?.message ||
+                  errors.email?.message}
               </span>
             )}
           </label>

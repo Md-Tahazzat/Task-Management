@@ -45,11 +45,18 @@ const Login = () => {
       })
       .catch((err) => {
         Swal.close();
-        setError("password", {
-          type: "manual",
-          message: err.message,
-        });
-        console.log(err);
+        const errorMess = err.message?.split("/")[1].slice(0, -2) || "";
+        if (errorMess === "user-not-found") {
+          setError("email", {
+            type: "manual",
+            message: "Please enter a valid email",
+          });
+        } else if (errorMess === "wrong-password") {
+          setError("password", {
+            type: "manual",
+            message: "The password you entered is incorrect.",
+          });
+        }
       });
   };
 
@@ -64,15 +71,14 @@ const Login = () => {
   //     })
   //     .catch((error) => console.log(error.message));
   // };
-
   return (
-    <div className="w-screen h-screen flex items-center justify-center">
+    <div className="w-full h-screen flex items-center justify-center">
       <UpdateTitle title="LogIn"></UpdateTitle>
       <form
-        className="border md:min-w-[28rem] mx-auto md:max-w-[32rem] p-4 w-full md:py-5 md:px-20 bg-slate-300/90 dark:bg-slate-700/90 border-slate-300 dark:border-slate-600 rounded-md"
+        className="border md:min-w-[28rem] mx-2 md:mx-auto md:max-w-[32rem] p-4 w-full md:py-5 md:px-20 bg-slate-300/90 dark:bg-slate-700/90 border-slate-300 dark:border-slate-600 rounded-md"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <h1 className="text-center text-2xl font-semibold ">Please LogIn!!</h1>
+        <h1 className="text-center text-2xl font-semibold ">Please LogIn</h1>
         <div className="w-full">
           <label htmlFor="email" className="label">
             Email:
@@ -83,7 +89,11 @@ const Login = () => {
             required
             {...register("email", { required: true })}
             placeholder="Enter your email"
-            className="py-2 px-2 bg-slate-100/60 dark:bg-slate-500/60 rounded-md border dark:border-slate-500 border-slate-300 focus:outline-none focus:border-slate-400 w-full max-w-lg"
+            className={`py-2 px-2 bg-slate-100/60 dark:bg-slate-500/60 w-full rounded-md border ${
+              errors?.email
+                ? "border-red-600"
+                : "dark:border-slate-500 border-slate-400"
+            } focus:outline-none focus:border-slate-400 max-w-sm`}
           />
         </div>
         <div className="w-full relative">
@@ -95,15 +105,6 @@ const Login = () => {
             required
             {...register("password", {
               required: true,
-              minLength: {
-                value: 6,
-                message: "Password must be at least 6 characters",
-              },
-              pattern: {
-                value: /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-                message:
-                  "Password must contain at least one uppercase letter and one special character",
-              },
             })}
             placeholder="Password"
             className={`py-2 px-2 bg-slate-100/60 dark:bg-slate-500/60 w-full rounded-md border ${
@@ -122,7 +123,9 @@ const Login = () => {
         </div>
         <div>
           <label className="label text-red-500 dark:text-red-400">
-            {errors && <span>{errors?.password?.message}</span>}
+            {errors && (
+              <span>{errors?.password?.message || errors?.email?.message}</span>
+            )}
           </label>
         </div>
 

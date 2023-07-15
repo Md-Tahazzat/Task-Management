@@ -6,7 +6,7 @@ import auth from "../Firebase/Firebase";
 const UseAxiosSecure = () => {
   const navigate = useNavigate();
   const axiosInstance = axios.create({
-    baseURL: "https://task-management-server-vert.vercel.app",
+    baseURL: "http://localhost:5000/",
   });
 
   axiosInstance.interceptors.request.use(

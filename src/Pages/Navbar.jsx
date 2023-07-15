@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaMoon, FaSun } from "react-icons/fa";
 import UseAuthcontext from "../Hooks/UseAuthcontext";
@@ -10,15 +10,23 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(true);
   const [theme, setTheme] = useState("light");
 
+  useEffect(() => {
+    const selectedTheme = localStorage.getItem("theme");
+    document.documentElement.classList = selectedTheme;
+    selectedTheme && setTheme(selectedTheme);
+  }, []);
+
   //  Dark and Light mode functionality
-  const toggleTheme = () => {
+  const toggleTheme = async () => {
     setTheme((curr) => (curr === "light" ? "dark" : "light"));
     document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", theme == "light" ? "dark" : "light");
   };
 
   const handleLogOut = () => {
     signOut(auth);
   };
+
   const listItems = (
     <>
       <li className="link-style">
@@ -55,6 +63,7 @@ const Navbar = () => {
     </>
   );
 
+  console.log(theme);
   return (
     <div className="sticky shadow-black top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 border-b border-b-slate-300/75 border-t-0 dark:border-b-slate-100/20 bg-white/75 supports-backdrop-blur:bg-white/95 dark:bg-black/75">
       <div className="flex items-center justify-between navbar max-w-[90rem] mx-auto px-4 sm:px-6 md:px-8">

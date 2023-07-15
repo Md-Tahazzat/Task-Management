@@ -3,15 +3,15 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./Root/Root.jsx";
-import ErrorPage from "./components/ErrorPage.jsx";
-import AllTaks from "./components/AllTaks.jsx";
-import AddTask from "./components/AddTask.jsx";
-import UpdateTask from "./components/UpdateTask.jsx";
+import ErrorPage from "./Pages/ErrorPage.jsx";
+import AllTaks from "./Pages/AllTaks.jsx";
+import AddTask from "./Pages/AddTask.jsx";
+import UpdateTask from "./Pages/UpdateTask.jsx";
 import AuthProvider from "./Provider/AuthProvider";
 import { QueryClient, QueryClientProvider } from "react-query";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import Loading from "./components/Loading";
+import Register from "./Pages/Register";
+import Login from "./Pages/Login";
+import Loading from "./Pages/Loading";
 import VerifyUser from "./VerifyUser/VerifyUser";
 
 // Main route for navigation

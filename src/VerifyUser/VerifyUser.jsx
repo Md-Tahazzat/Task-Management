@@ -1,6 +1,6 @@
 import React from "react";
 import UseAuthcontext from "../Hooks/UseAuthcontext";
-import Loading from "../components/Loading";
+import Loading from "../Pages/Loading";
 import { Navigate, useLocation } from "react-router-dom";
 
 const VerifyUser = ({ children }) => {
