@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        fetch("http://localhost:5000/user", {
+        fetch("https://task-management-server-vert.vercel.app/user", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
