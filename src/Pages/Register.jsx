@@ -1,21 +1,18 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import UpdateTitle from "../Hooks/UpdateTitle";
 import Swal from "sweetalert2";
-import {
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from "../Firebase/Firebase";
 
 const Register = () => {
   const [hidePassword, setHidePassword] = useState(true);
+
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location?.state?.from || "/";
+  const from = location?.state?.from || "/add-task";
 
   // React Hook form functionality
   const {
@@ -26,6 +23,7 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
+    setSocialLoginError("");
     const { confirmPassword, email, password } = data;
     if (password !== confirmPassword) {
       setError("confirmPassword", {
@@ -61,26 +59,13 @@ const Register = () => {
               "This email already exists. Please choose a different email.",
           });
         }
-        console.log(errorMess);
         Swal.close();
       });
   };
 
-  // social login method
-  //   const handleGoogleSigin = () => {
-  //     const provider = new GoogleAuthProvider();
-  //     signInWithPopup(auth)
-  //       .then((result) => {
-  //         if (result?.user) {
-  //           navigate(from, { replace: true });
-  //         }
-  //       })
-  //       .catch((error) => console.log(err.message));
-  //   };
-
   return (
     <div className="w-screen h-screen flex items-center justify-center  ">
-      <UpdateTitle title="Reister"></UpdateTitle>;
+      <UpdateTitle title="Reister"></UpdateTitle>
       <form
         className="border md:min-w-[28rem] mx-2 md:mx-auto md:max-w-[32rem] p-4 w-full md:py-5 md:px-20 bg-slate-300/90 dark:bg-slate-700/90 border-slate-300 dark:border-slate-600 rounded-md"
         onSubmit={handleSubmit(onSubmit)}
@@ -213,16 +198,6 @@ const Register = () => {
           value="Register"
         />
       </form>
-      {/* <p className="text-center mt-10">Sign in with </p>
-      <div className="my-4 max-w-[32rem] w-full mx-auto flex items-center justify-center gap-5">
-        <button
-          onClick={handleGoogleSigin}
-          className="flex items-center rounded-md bg-slate-500/70 shadow-lg dark:bg-slate-600/70 hover:bg-slate-400/90 dark:hover:bg-slate-600/95 duration-200 text-xl text-white justify-center border border-slate-400 dark:border-slate-600"
-        >
-          <FaGoogle className="w-10 h-10 p-1" />{" "}
-          <span className="px-2">Google</span>
-        </button>
-      </div> */}
     </div>
   );
 };

@@ -49,8 +49,6 @@ const AllTaks = () => {
       }
     });
   };
-
-  console.log(tasks?.[0]);
   return (
     <div className=" md:mx-auto">
       <UpdateTitle title="Tasks"></UpdateTitle>

@@ -27,8 +27,8 @@ const UseAxiosSecure = () => {
   axiosInstance.interceptors.response.use(
     (response) => response?.data,
     async (error) => {
-      console.log(error);
       if (error.response && error.response.status === (401 || 403)) {
+        localStorage.removeItem("access-token");
         signOut(auth);
         navigate("/login");
       }

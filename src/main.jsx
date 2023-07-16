@@ -25,7 +25,6 @@ const router = createBrowserRouter([
         path: "/",
         element: (
           <VerifyUser>
-            {" "}
             <AllTaks></AllTaks>
           </VerifyUser>
         ),

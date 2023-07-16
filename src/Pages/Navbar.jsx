@@ -62,8 +62,6 @@ const Navbar = () => {
       )}
     </>
   );
-
-  console.log(theme);
   return (
     <div className="sticky shadow-black top-0 z-40 w-full backdrop-blur flex-none transition-colors duration-500 lg:z-50 border-b border-b-slate-300/75 border-t-0 dark:border-b-slate-100/20 bg-white/75 supports-backdrop-blur:bg-white/95 dark:bg-black/75">
       <div className="flex items-center justify-between navbar max-w-[90rem] mx-auto px-4 sm:px-6 md:px-8">

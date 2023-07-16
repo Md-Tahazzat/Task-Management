@@ -49,7 +49,6 @@ const AddTask = () => {
         Swal.close();
         console.log(err);
       });
-    console.log(data);
   };
 
   return (
