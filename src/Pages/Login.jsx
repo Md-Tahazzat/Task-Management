@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import UpdateTitle from "../Hooks/UpdateTitle";
 import Swal from "sweetalert2";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -9,9 +9,6 @@ import auth from "../Firebase/Firebase";
 
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const from = location?.state?.from || "/add-task";
   const {
     register,
     handleSubmit,
@@ -36,7 +33,7 @@ const Login = () => {
         if (user) {
           Swal.close();
           reset();
-          navigate(from, { replace: true });
+          navigate("/add-task", { replace: true });
         }
       })
       .catch((err) => {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import UpdateTitle from "../Hooks/UpdateTitle";
 import Swal from "sweetalert2";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -9,10 +9,6 @@ import auth from "../Firebase/Firebase";
 
 const Register = () => {
   const [hidePassword, setHidePassword] = useState(true);
-
-  const location = useLocation();
-  const navigate = useNavigate();
-  const from = location?.state?.from || "/add-task";
 
   // React Hook form functionality
   const {
@@ -23,7 +19,6 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    setSocialLoginError("");
     const { confirmPassword, email, password } = data;
     if (password !== confirmPassword) {
       setError("confirmPassword", {
@@ -47,7 +42,7 @@ const Register = () => {
         if (user) {
           Swal.close();
           reset();
-          navigate(from, { replace: true });
+          navigate("/add-task", { replace: true });
         }
       })
       .catch((err) => {
