@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UpdateTitle from "../Hooks/UpdateTitle";
 import Swal from "sweetalert2";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -9,7 +9,7 @@ import auth from "../Firebase/Firebase";
 
 const Register = () => {
   const [hidePassword, setHidePassword] = useState(true);
-
+  const navigate = useNavigate();
   // React Hook form functionality
   const {
     register,
@@ -41,8 +41,8 @@ const Register = () => {
       .then((user) => {
         if (user) {
           Swal.close();
-          reset();
           navigate("/add-task", { replace: true });
+          reset();
         }
       })
       .catch((err) => {

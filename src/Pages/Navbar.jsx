@@ -50,7 +50,7 @@ const Navbar = () => {
           </li>
           <img
             title={user?.displayName}
-            className="w-10 h-10 hidden md:block rounded-full border border-slate-300 dark:border-slate-600"
+            className="w-8 ml-3 lg:ml-0 h-8 lg:w-10 lg:h-10 rounded-full border border-slate-300 dark:border-slate-600"
             src={
               user?.photoURL
                 ? `${user?.photoURL}`
@@ -111,9 +111,9 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <div className="navbar-end md:hidden">
+        <div className="navbar-end lg:hidden">
           <button
-            className="flex navbar-end md:hidden items-center justify-evenly w-auto gap-1 border border-slate-300 dark:border-slate-600 py-1 px-2 rounded-lg hover:text-black dark:hover:text-white text-base duration-200"
+            className="flex items-center justify-evenly w-auto gap-1 border border-slate-300 dark:border-slate-600 py-1 px-2 rounded-lg hover:text-black dark:hover:text-white text-base duration-200"
             onClick={toggleTheme}
           >
             {theme === "light" ? (
