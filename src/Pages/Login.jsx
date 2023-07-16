@@ -113,7 +113,6 @@ const Login = () => {
         <p className="text-sm">
           Dont't have an account ?
           <Link
-            state={{ from: from }}
             className="text-blue-600 dark:text-blue-400 ml-1"
             to="/register"
           >

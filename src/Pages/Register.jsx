@@ -178,11 +178,7 @@ const Register = () => {
 
         <p className="text-sm">
           Already have an account?
-          <Link
-            state={{ from: from }}
-            className="text-blue-600 dark:text-blue-400 ml-1"
-            to="/login"
-          >
+          <Link className="text-blue-600 dark:text-blue-400 ml-1" to="/login">
             Login
           </Link>
         </p>
